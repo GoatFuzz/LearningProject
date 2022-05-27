@@ -1,17 +1,28 @@
 import React, {useState} from 'react'
+import {useNavigate} from 'react-router-dom'
+import EmployeeService from '../services/EmployeeService'
 
 const AddEmployeeComponent = () => {
     
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [emailID, setEmailID] = useState('')
+    const navigate = useNavigate();
 
     const saveEmployee = (e) => {
         e.preventDefault();
 
         const employee = {firstName,lastName,emailID}
 
-        console.log(employee);
+        EmployeeService.createEmployee(employee).then((response) => {
+
+            console.log(response.data)
+
+            navigate('/employees');
+
+        }).catch(error => {
+            console.log(error)
+        })
     }
     
     return (
